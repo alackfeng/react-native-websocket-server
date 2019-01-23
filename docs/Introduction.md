@@ -25,6 +25,26 @@ react-native init websocketapp
 cd websocketapp
 react-native run-ios
 
-yarn add 
+###### 增加react-native-websocket-server库
+
+yarn add file:../../
+
+`````
+
+
+
+#### 问题集锦
+`````
+Q1. Loading dependency graph...
+error: bundling failed: Error: jest-haste-map: @providesModule naming collision:
+  Duplicate module name: react-animated
+
+A1. 
+watchman watch-del-all
+rm -rf node_modules && yarn install
+rm -fr $TMPDIR/react-*
+yarn start --reset-cache
+
+
 
 `````
