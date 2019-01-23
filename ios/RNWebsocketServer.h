@@ -5,7 +5,11 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
-@interface RNWebsocketServer : NSObject <RCTBridgeModule>
+#import <PSWebSocket/PSWebSocketServer.h>
+
+@interface RNWebsocketServer <PSWebSocketServerDelegate> : NSObject <RCTBridgeModule>
+
+@property (nonatomic, strong) PSWebSocketServer *server;
 
 @end
   

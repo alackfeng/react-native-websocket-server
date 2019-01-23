@@ -28,6 +28,12 @@ react-native run-ios
 ###### 增加react-native-websocket-server库
 
 yarn add file:../../
+react-native link react-native-websocket-server
+
+
+###### 添加ios平台websocket库：PocketSocket
+vi RNWebsocketServer.podspec ====>  s.dependency "PocketSocket" 
+
 
 `````
 

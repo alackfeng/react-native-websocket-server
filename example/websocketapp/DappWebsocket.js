@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 
 import RNWebsocketServer from 'react-native-websocket-server';
+console.log('RNWebsocketServer: ', RNWebsocketServer);
 
 // const RNServer = new RNWebsocketServer('0.0.0.0', 15566);
-// console.log('RNWebsocketServer: ', RNServer.start());
+console.log('RNWebsocketServer: ', RNWebsocketServer.start('0.0.0.0', 15566));
 
 
 class DappWebsocket extends Component {
