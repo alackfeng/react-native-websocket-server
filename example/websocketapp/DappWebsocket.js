@@ -14,14 +14,14 @@ class DappWebsocket extends Component {
     this.state = {
       show: 'init',
       ws: null,
-      url: "ws://127.0.0.1:15566/",
-      // url: "ws://192.168.0.238:15566/",
+      url: "ws://127.0.0.1:50005/",
+      // url: "ws://192.168.0.238:50005/",
       RNServer: null,
     }
   }
 
   componentDidMount() {
-    const RNServer = new RNWebsocketServer('0.0.0.0', 15566);
+    const RNServer = new RNWebsocketServer('0.0.0.0', 50005);
     RNServer.start();
     this.setState({RNServer})
   }
@@ -59,7 +59,7 @@ class DappWebsocket extends Component {
 
     return (
       <View>
-        <Text>DappWebsocket: </Text>
+        <Text>DappWebsocket: {this.state.show}</Text>
         <TextInput 
           style={{height: 40, borderColor: 'gray', borderBottomWidth: 1, width: 300}}
           value={this.state.url} 
@@ -68,7 +68,6 @@ class DappWebsocket extends Component {
         <Button title={'Create'} onPress={this.createWS} />
         <Button title={'Send'} onPress={this.sendMessage} />
         <Button title={'Close'} onPress={this.closeWS} />
-        <Text>{this.state.show}</Text>
       </View>
     );
   }
