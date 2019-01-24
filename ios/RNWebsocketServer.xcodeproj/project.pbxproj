@@ -7,6 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F43359621F86F7E006B8F7C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F79BD1C21F85D73000EC4F2 /* CFNetwork.framework */; };
+		4F43359721F86F84006B8F7C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F79BD2021F85D85000EC4F2 /* Security.framework */; };
+		4F43359821F86F90006B8F7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F79BD1E21F85D7D000EC4F2 /* Foundation.framework */; };
+		4F43359921F86F98006B8F7C /* libSystem.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F79BD2421F85DAA000EC4F2 /* libSystem.tbd */; };
+		4F43359A21F86FA0006B8F7C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F79BD2221F85DA0000EC4F2 /* libz.tbd */; };
+		4F8E24C421F959F5008DDDB6 /* PSWebSocketTypes.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B221F959F3008DDDB6 /* PSWebSocketTypes.h */; };
+		4F8E24C521F959F5008DDDB6 /* PSWebSocketUTF8Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B321F959F3008DDDB6 /* PSWebSocketUTF8Decoder.m */; };
+		4F8E24C621F959F5008DDDB6 /* PSWebSocketDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B421F959F3008DDDB6 /* PSWebSocketDriver.m */; };
+		4F8E24C721F959F5008DDDB6 /* PSWebSocketNetworkThread.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B521F959F3008DDDB6 /* PSWebSocketNetworkThread.h */; };
+		4F8E24C821F959F5008DDDB6 /* PSWebSocketBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B621F959F3008DDDB6 /* PSWebSocketBuffer.m */; };
+		4F8E24C921F959F5008DDDB6 /* PSWebSocketInternal.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B721F959F4008DDDB6 /* PSWebSocketInternal.h */; };
+		4F8E24CA21F959F5008DDDB6 /* PSWebSocket.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B821F959F4008DDDB6 /* PSWebSocket.h */; };
+		4F8E24CB21F959F5008DDDB6 /* PSWebSocketInflater.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24B921F959F4008DDDB6 /* PSWebSocketInflater.h */; };
+		4F8E24CC21F959F5008DDDB6 /* PSWebSocketInflater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24BA21F959F4008DDDB6 /* PSWebSocketInflater.m */; };
+		4F8E24CD21F959F5008DDDB6 /* PSWebSocketUTF8Decoder.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24BB21F959F4008DDDB6 /* PSWebSocketUTF8Decoder.h */; };
+		4F8E24CE21F959F5008DDDB6 /* PSWebSocketDeflater.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24BC21F959F4008DDDB6 /* PSWebSocketDeflater.h */; };
+		4F8E24CF21F959F5008DDDB6 /* PSWebSocketDeflater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24BD21F959F4008DDDB6 /* PSWebSocketDeflater.m */; };
+		4F8E24D021F959F5008DDDB6 /* PSWebSocketServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24BE21F959F4008DDDB6 /* PSWebSocketServer.m */; };
+		4F8E24D121F959F5008DDDB6 /* PSWebSocketNetworkThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24BF21F959F4008DDDB6 /* PSWebSocketNetworkThread.m */; };
+		4F8E24D221F959F5008DDDB6 /* PSWebSocketBuffer.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24C021F959F4008DDDB6 /* PSWebSocketBuffer.h */; };
+		4F8E24D321F959F5008DDDB6 /* PSWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24C121F959F4008DDDB6 /* PSWebSocket.m */; };
+		4F8E24D421F959F5008DDDB6 /* PSWebSocketDriver.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24C221F959F4008DDDB6 /* PSWebSocketDriver.h */; };
+		4F8E24D521F959F5008DDDB6 /* PSWebSocketServer.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E24C321F959F5008DDDB6 /* PSWebSocketServer.h */; };
 		B3E7B58A1CC2AC0600A0062D /* RNWebsocketServer.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNWebsocketServer.m */; };
 /* End PBXBuildFile section */
 
@@ -24,13 +47,33 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNWebsocketServer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNWebsocketServer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4942AC8E4AB06C4E279A17DA /* Pods-RNWebsocketServer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNWebsocketServer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RNWebsocketServer/Pods-RNWebsocketServer.debug.xcconfig"; sourceTree = "<group>"; };
 		4F79BD1C21F85D73000EC4F2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4F79BD1E21F85D7D000EC4F2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4F79BD2021F85D85000EC4F2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4F79BD2221F85DA0000EC4F2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4F79BD2421F85DAA000EC4F2 /* libSystem.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.tbd; path = usr/lib/libSystem.tbd; sourceTree = SDKROOT; };
+		4F8E24B221F959F3008DDDB6 /* PSWebSocketTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketTypes.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketTypes.h; sourceTree = "<group>"; };
+		4F8E24B321F959F3008DDDB6 /* PSWebSocketUTF8Decoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketUTF8Decoder.m; path = Pods/PocketSocket/PocketSocket/PSWebSocketUTF8Decoder.m; sourceTree = "<group>"; };
+		4F8E24B421F959F3008DDDB6 /* PSWebSocketDriver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketDriver.m; path = Pods/PocketSocket/PocketSocket/PSWebSocketDriver.m; sourceTree = "<group>"; };
+		4F8E24B521F959F3008DDDB6 /* PSWebSocketNetworkThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketNetworkThread.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketNetworkThread.h; sourceTree = "<group>"; };
+		4F8E24B621F959F3008DDDB6 /* PSWebSocketBuffer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketBuffer.m; path = Pods/PocketSocket/PocketSocket/PSWebSocketBuffer.m; sourceTree = "<group>"; };
+		4F8E24B721F959F4008DDDB6 /* PSWebSocketInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketInternal.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketInternal.h; sourceTree = "<group>"; };
+		4F8E24B821F959F4008DDDB6 /* PSWebSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocket.h; path = Pods/PocketSocket/PocketSocket/PSWebSocket.h; sourceTree = "<group>"; };
+		4F8E24B921F959F4008DDDB6 /* PSWebSocketInflater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketInflater.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketInflater.h; sourceTree = "<group>"; };
+		4F8E24BA21F959F4008DDDB6 /* PSWebSocketInflater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketInflater.m; path = Pods/PocketSocket/PocketSocket/PSWebSocketInflater.m; sourceTree = "<group>"; };
+		4F8E24BB21F959F4008DDDB6 /* PSWebSocketUTF8Decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketUTF8Decoder.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketUTF8Decoder.h; sourceTree = "<group>"; };
+		4F8E24BC21F959F4008DDDB6 /* PSWebSocketDeflater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketDeflater.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketDeflater.h; sourceTree = "<group>"; };
+		4F8E24BD21F959F4008DDDB6 /* PSWebSocketDeflater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketDeflater.m; path = Pods/PocketSocket/PocketSocket/PSWebSocketDeflater.m; sourceTree = "<group>"; };
+		4F8E24BE21F959F4008DDDB6 /* PSWebSocketServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketServer.m; path = Pods/PocketSocket/PocketSocket/PSWebSocketServer.m; sourceTree = "<group>"; };
+		4F8E24BF21F959F4008DDDB6 /* PSWebSocketNetworkThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketNetworkThread.m; path = Pods/PocketSocket/PocketSocket/PSWebSocketNetworkThread.m; sourceTree = "<group>"; };
+		4F8E24C021F959F4008DDDB6 /* PSWebSocketBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketBuffer.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketBuffer.h; sourceTree = "<group>"; };
+		4F8E24C121F959F4008DDDB6 /* PSWebSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PSWebSocket.m; path = Pods/PocketSocket/PocketSocket/PSWebSocket.m; sourceTree = "<group>"; };
+		4F8E24C221F959F4008DDDB6 /* PSWebSocketDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketDriver.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketDriver.h; sourceTree = "<group>"; };
+		4F8E24C321F959F5008DDDB6 /* PSWebSocketServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PSWebSocketServer.h; path = Pods/PocketSocket/PocketSocket/PSWebSocketServer.h; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNWebsocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNWebsocketServer.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNWebsocketServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNWebsocketServer.m; sourceTree = "<group>"; };
+		DDE4AE9D813DD9DEDE25D325 /* Pods-RNWebsocketServer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNWebsocketServer.release.xcconfig"; path = "Pods/Target Support Files/Pods-RNWebsocketServer/Pods-RNWebsocketServer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +81,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F43359A21F86FA0006B8F7C /* libz.tbd in Frameworks */,
+				4F43359921F86F98006B8F7C /* libSystem.tbd in Frameworks */,
+				4F43359821F86F90006B8F7C /* Foundation.framework in Frameworks */,
+				4F43359721F86F84006B8F7C /* Security.framework in Frameworks */,
+				4F43359621F86F7E006B8F7C /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +98,15 @@
 				134814201AA4EA6300B7C361 /* libRNWebsocketServer.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2549531F6E0795075710E8B6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4942AC8E4AB06C4E279A17DA /* Pods-RNWebsocketServer.debug.xcconfig */,
+				DDE4AE9D813DD9DEDE25D325 /* Pods-RNWebsocketServer.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		4F79BD1B21F85D73000EC4F2 /* Frameworks */ = {
@@ -67,10 +124,29 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				4F8E24B821F959F4008DDDB6 /* PSWebSocket.h */,
+				4F8E24C121F959F4008DDDB6 /* PSWebSocket.m */,
+				4F8E24C021F959F4008DDDB6 /* PSWebSocketBuffer.h */,
+				4F8E24B621F959F3008DDDB6 /* PSWebSocketBuffer.m */,
+				4F8E24BC21F959F4008DDDB6 /* PSWebSocketDeflater.h */,
+				4F8E24BD21F959F4008DDDB6 /* PSWebSocketDeflater.m */,
+				4F8E24C221F959F4008DDDB6 /* PSWebSocketDriver.h */,
+				4F8E24B421F959F3008DDDB6 /* PSWebSocketDriver.m */,
+				4F8E24B921F959F4008DDDB6 /* PSWebSocketInflater.h */,
+				4F8E24BA21F959F4008DDDB6 /* PSWebSocketInflater.m */,
+				4F8E24B721F959F4008DDDB6 /* PSWebSocketInternal.h */,
+				4F8E24B521F959F3008DDDB6 /* PSWebSocketNetworkThread.h */,
+				4F8E24BF21F959F4008DDDB6 /* PSWebSocketNetworkThread.m */,
+				4F8E24C321F959F5008DDDB6 /* PSWebSocketServer.h */,
+				4F8E24BE21F959F4008DDDB6 /* PSWebSocketServer.m */,
+				4F8E24B221F959F3008DDDB6 /* PSWebSocketTypes.h */,
+				4F8E24BB21F959F4008DDDB6 /* PSWebSocketUTF8Decoder.h */,
+				4F8E24B321F959F3008DDDB6 /* PSWebSocketUTF8Decoder.m */,
 				B3E7B5881CC2AC0600A0062D /* RNWebsocketServer.h */,
 				B3E7B5891CC2AC0600A0062D /* RNWebsocketServer.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				4F79BD1B21F85D73000EC4F2 /* Frameworks */,
+				2549531F6E0795075710E8B6 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +157,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNWebsocketServer" */;
 			buildPhases = (
+				13858CDCB7636D3CA6ABF18F /* [CP] Check Pods Manifest.lock */,
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
@@ -125,11 +202,54 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		13858CDCB7636D3CA6ABF18F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RNWebsocketServer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F8E24C421F959F5008DDDB6 /* PSWebSocketTypes.h in Sources */,
+				4F8E24C521F959F5008DDDB6 /* PSWebSocketUTF8Decoder.m in Sources */,
+				4F8E24C621F959F5008DDDB6 /* PSWebSocketDriver.m in Sources */,
+				4F8E24C721F959F5008DDDB6 /* PSWebSocketNetworkThread.h in Sources */,
+				4F8E24C821F959F5008DDDB6 /* PSWebSocketBuffer.m in Sources */,
+				4F8E24C921F959F5008DDDB6 /* PSWebSocketInternal.h in Sources */,
+				4F8E24CA21F959F5008DDDB6 /* PSWebSocket.h in Sources */,
+				4F8E24CB21F959F5008DDDB6 /* PSWebSocketInflater.h in Sources */,
+				4F8E24CC21F959F5008DDDB6 /* PSWebSocketInflater.m in Sources */,
+				4F8E24CD21F959F5008DDDB6 /* PSWebSocketUTF8Decoder.h in Sources */,
+				4F8E24CE21F959F5008DDDB6 /* PSWebSocketDeflater.h in Sources */,
+				4F8E24CF21F959F5008DDDB6 /* PSWebSocketDeflater.m in Sources */,
+				4F8E24D021F959F5008DDDB6 /* PSWebSocketServer.m in Sources */,
+				4F8E24D121F959F5008DDDB6 /* PSWebSocketNetworkThread.m in Sources */,
+				4F8E24D221F959F5008DDDB6 /* PSWebSocketBuffer.h in Sources */,
+				4F8E24D321F959F5008DDDB6 /* PSWebSocket.m in Sources */,
+				4F8E24D421F959F5008DDDB6 /* PSWebSocketDriver.h in Sources */,
+				4F8E24D521F959F5008DDDB6 /* PSWebSocketServer.h in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* RNWebsocketServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,12 +340,14 @@
 		};
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4942AC8E4AB06C4E279A17DA /* Pods-RNWebsocketServer.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
+					"/Users/tokenfun/source/RNMoudles/react-native-websocket-server/ios/Pods/PocketSocket",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
@@ -236,12 +358,14 @@
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDE4AE9D813DD9DEDE25D325 /* Pods-RNWebsocketServer.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
+					"/Users/tokenfun/source/RNMoudles/react-native-websocket-server/ios/Pods/PocketSocket",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
