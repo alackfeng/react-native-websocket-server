@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "rm -rf node_modules/react-native-websocket-server/example/", 
+    "postinstall": "rm -rf node_modules/react-native-websocket-server/example/",
     "test": "jest"
   },
   "dependencies": {

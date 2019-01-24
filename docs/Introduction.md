@@ -55,6 +55,9 @@ or:
 yarn add file:../../; rm -rf node_modules/react-native-websocket-server/example/
 
 
+Q2. android native logcat 日志查看
+A2. adb logcat -s WebsocketServer:V
+
 
 
 

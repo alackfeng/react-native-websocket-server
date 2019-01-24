@@ -14,8 +14,8 @@ class DappWebsocket extends Component {
     this.state = {
       show: 'init',
       ws: null,
-      // url: "ws://127.0.0.1:15566/"
-      url: "ws://192.168.0.238:15566/",
+      url: "ws://127.0.0.1:15566/",
+      // url: "ws://192.168.0.238:15566/",
       RNServer: null,
     }
   }
