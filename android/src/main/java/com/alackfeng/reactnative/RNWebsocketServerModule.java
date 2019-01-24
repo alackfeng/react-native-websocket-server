@@ -15,6 +15,7 @@ import android.util.Log;
 public class RNWebsocketServerModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
+  private static final String MODULE_NAME = "RNWebsocketServer";
 
   private RNWebsocketServer server  = null;
 
@@ -32,7 +33,7 @@ public class RNWebsocketServerModule extends ReactContextBaseJavaModule {
   public void start(String ipAddress, int port) throws IOException, InterruptedException {
       
     InetSocketAddress inetSocketAddress = new InetSocketAddress(ipAddress, port);
-    Log.d("WebsocketServer", "RNWebsocketServer::start...");
+    Log.d(MODULE_NAME, "RNWebsocketServer::start...");
 
     server = new RNWebsocketServer(inetSocketAddress);
     server.start();
@@ -41,7 +42,7 @@ public class RNWebsocketServerModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void stop() throws IOException, InterruptedException {
 
-    Log.d("WebsocketServer", "RNWebsocketServer::stop...");
+    Log.d(MODULE_NAME, "RNWebsocketServer::stop...");
     server.stop();
   }
 }

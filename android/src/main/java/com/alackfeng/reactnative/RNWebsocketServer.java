@@ -7,6 +7,8 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 
+import android.util.Log;
+
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.framing.Framedata;
@@ -15,6 +17,8 @@ import org.java_websocket.server.WebSocketServer;
 
 
 public class RNWebsocketServer extends WebSocketServer {
+
+  private static final String MODULE_NAME = "RNWebsocketServer";
 
   public RNWebsocketServer( int port ) throws UnknownHostException {
     super( new InetSocketAddress( port ) );
@@ -30,26 +34,26 @@ public class RNWebsocketServer extends WebSocketServer {
     conn.send("Welcome to the server!"); //This method sends a message to the new client
 
     broadcast( "new connection: " + handshake.getResourceDescriptor() ); //This method sends a message to all clients connected
-    System.out.println( conn.getRemoteSocketAddress().getAddress().getHostAddress() + " entered the room!" );
+    Log.d(MODULE_NAME, conn.getRemoteSocketAddress().getAddress().getHostAddress() + " entered the room!");
 
   }
 
   @Override
   public void onClose( WebSocket conn, int code, String reason, boolean remote ) {
     broadcast( conn + " has left the room!" );
-    System.out.println( conn + " has left the room!" );
+    Log.d(MODULE_NAME, conn + "has left the room!");
   }
 
   @Override
   public void onMessage( WebSocket conn, String message ) {
     broadcast( message );
-    System.out.println( conn + ": " + message );
+    Log.d(MODULE_NAME, conn + ": " + message );
   }
 
   @Override
   public void onMessage( WebSocket conn, ByteBuffer message ) {
     broadcast( message.array() );
-    System.out.println( conn + ": " + message );
+    Log.d(MODULE_NAME, conn + ": " + message );
   }
 
   @Override
