@@ -19,10 +19,15 @@ RCT_EXPORT_MODULE()
 
 
 RCT_EXPORT_METHOD(start:(NSString *)ipAddress port:(int)port) {
-    RCTLogInfo(@"Pretending to create an event at %d", port);
+    RCTLogInfo(@"Create Websocket Server at %d", port);
     self.server = [PSWebSocketServer serverWithHost:ipAddress port:port];
     self.server.delegate = self;
     [self.server start];
+}
+
+RCT_EXPORT_METHOD(stop) {
+    RCTLogInfo(@"Stop Websocket Server ...");
+    [self.server stop];
 }
 
 #pragma mark - PSWebSocketServerDelegate

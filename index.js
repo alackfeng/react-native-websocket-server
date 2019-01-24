@@ -8,10 +8,11 @@ export default class WebsocketServer {
         this.port = port;
     }
 
-    /**
-     * Starts websocket server
-     */
     start () {
         RNWebsocketServer.start(this.ipAddress, this.port);
+    }
+
+    stop () {
+        RNWebsocketServer.stop();
     }
 }

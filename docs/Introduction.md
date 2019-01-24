@@ -52,7 +52,8 @@ rm -fr $TMPDIR/react-*
 yarn start --reset-cache
 
 or: 
-rm -rf node_modules/react-native-websocket-server/example/websocketapp/node_modules
+yarn add file:../../; rm -rf node_modules/react-native-websocket-server/example/
+
 
 
 
