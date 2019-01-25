@@ -3947,6 +3947,9 @@ react-is@^16.6.3:
 "react-native-websocket-server@file:../..":
   version "1.0.0"
 
+"react-native-websocket-server@file:../../":
+  version "1.0.0"
+
 react-native-webview@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-3.2.1.tgz#a51843699f700c8c02a9c7fb33f9db96bc401237"

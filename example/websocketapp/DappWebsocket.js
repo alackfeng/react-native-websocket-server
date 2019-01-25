@@ -21,13 +21,20 @@ class DappWebsocket extends Component {
   }
 
   componentDidMount() {
-    const RNServer = new RNWebsocketServer('0.0.0.0', 50005);
+    const RNServer = new RNWebsocketServer('0.0.0.0', 50005, (evt) => {
+      console.log("RNServer::recv - ", evt);
+    });
     RNServer.start();
+    console.log("RNServer::start - ");
     this.setState({RNServer})
   }
 
   sendMessage = () => {
-    this.state.ws.send('message-' + (Math.random()*255).toFixed(0))
+    // this.state.ws.send('message-' + (Math.random()*255).toFixed(0))
+    const typeJson = 1;
+    const message = 'message-' + (Math.random()*255).toFixed(0);
+    const json = {url: "a", data: ["ddd", "daa"]};
+    this.state.ws.send(typeJson ? JSON.stringify(json) : message);
   }
 
   createWS = () => {
