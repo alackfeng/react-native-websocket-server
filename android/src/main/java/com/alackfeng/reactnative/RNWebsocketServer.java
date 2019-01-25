@@ -60,18 +60,18 @@ public class RNWebsocketServer extends WebSocketServer {
 
     // conn.send("Welcome to the server!"); //This method sends a message to the new client
 
-    Log.d(MODULE_NAME, "onOpen(): " + conn.getRemoteSocketAddress().getAddress().getHostAddress() 
-      + " been connected\n" + handshake.getResourceDescriptor());
+    // Log.d(MODULE_NAME, "onOpen(): " + conn.getRemoteSocketAddress().getHostName() + ":" + conn.getRemoteSocketAddress().getPort()
+    //   + " been connected\n" + conn.getResourceDescriptor());
 
 
-    WritableMap request = fillRequestMap(EVENT_TYPE_OPEN, conn, handshake.getResourceDescriptor());
+    WritableMap request = fillRequestMap(EVENT_TYPE_OPEN, conn, "onOpen");
     this.sendEvent(reactContext, SERVER_EVENT_ID, request);
   }
 
   @Override
   public void onClose( WebSocket conn, int code, String reason, boolean remote ) {
     // broadcast( conn + " has left the room!" );
-    Log.d(MODULE_NAME, "onClose(): " + conn + "has left the room!");
+    // Log.d(MODULE_NAME, "onClose(): " + conn + "has left the room!");
 
     WritableMap request = fillRequestMap(EVENT_TYPE_CLOSE, conn, reason);
     this.sendEvent(reactContext, SERVER_EVENT_ID, request);
@@ -81,7 +81,7 @@ public class RNWebsocketServer extends WebSocketServer {
   @Override
   public void onMessage( WebSocket conn, String message ) {
     // broadcast( message );
-    Log.d(MODULE_NAME, "onMessage() - " + conn + ": " + message );
+    // Log.d(MODULE_NAME, "onMessage() - " + conn + ": " + message );
 
     WritableMap request = fillRequestMap(EVENT_TYPE_MESSAGE, conn, message);
     this.sendEvent(reactContext, SERVER_EVENT_ID, request);
@@ -109,7 +109,7 @@ public class RNWebsocketServer extends WebSocketServer {
 
   @Override
   public void onStart() {
-    Log.d(MODULE_NAME, "onStart(): " + "Device Websocket Server started!");
+    // Log.d(MODULE_NAME, "onStart(): " + "Device Websocket Server started!");
     setConnectionLostTimeout(0);
     setConnectionLostTimeout(100);
   }
@@ -120,8 +120,11 @@ public class RNWebsocketServer extends WebSocketServer {
 
   private WritableMap fillRequestMap(String type, WebSocket conn, String body) {
 
+    // String url = conn.getRemoteSocketAddress().getAddress().getHostAddress() + ":" + conn.getRemoteSocketAddress().getPort() +  conn.getResourceDescriptor();
+    String url = conn.getRemoteSocketAddress().toString() +  conn.getResourceDescriptor();
+
     WritableMap request = Arguments.createMap();
-    request.putString("url", conn.getRemoteSocketAddress().getAddress().getHostAddress());
+    request.putString("url", url);
     request.putString("event", type);
     request.putString("requestId", requestId());
     request.putString("data", body);
@@ -130,7 +133,7 @@ public class RNWebsocketServer extends WebSocketServer {
   }
 
   private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
-    // Log.d(MODULE_NAME, "sendEvent(): " + params);
+    Log.d(MODULE_NAME, "sendEvent(): " + params);
     reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
   }
 

@@ -22,7 +22,7 @@ export default class DappWebView extends Component {
   }
 
   handleNavigationStateChange = (navState) => {
-    console.log('handleNavigationStateChange: ', navState)
+    // console.log('handleNavigationStateChange: ', navState)
   }
 
 
@@ -34,12 +34,14 @@ export default class DappWebView extends Component {
   }
 
   handleWebViewMessage = (e) => {
-    console.log("handleWebViewMessage: ", e.nativeEvent.url, e.nativeEvent.data);
+    // console.log("handleWebViewMessage: ", e.nativeEvent.url, e.nativeEvent.data);
     const url = e.nativeEvent.data;
 
     if(!url) {
       console.error('handleWebViewMessage - url error ');
     }
+
+    return;
 
     const ontprovider = 'ontprovider://ont.io?params=';
     if(0 === url.indexOf(ontprovider)) {
