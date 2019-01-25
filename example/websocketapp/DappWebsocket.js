@@ -22,7 +22,7 @@ class DappWebsocket extends Component {
 
   componentDidMount() {
     const RNServer = new RNWebsocketServer('0.0.0.0', 50005, (evt) => {
-      console.log("RNServer::recv - ", evt);
+      console.log("RNServer::recv - ", typeof(evt), evt.event);
     });
     RNServer.start();
     console.log("RNServer::start - ");

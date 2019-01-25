@@ -115,6 +115,7 @@ public class RNWebsocketServer extends WebSocketServer {
   }
 
   public void send(String requestId, String body) {
+    Log.d(MODULE_NAME, "sendResponse(): " + requestId + ": " + body);
     broadcast( body );
   }
 
