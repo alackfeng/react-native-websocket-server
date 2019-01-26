@@ -2,6 +2,8 @@
 #import "RNWebsocketServer.h";
 #import "PocketSocket/PSWebSocketServer.h";
 #import <React/RCTLog.h>
+#import <React/RCTBridge.h>
+#import <React/RCTEventDispatcher.h>
 
 @interface RNWebsocketServer () <PSWebSocketServerDelegate>
 
@@ -9,7 +11,11 @@
 
 @end
 
+static RCTBridge *bridge;
+
 @implementation RNWebsocketServer
+
+@synthesize bridge = _bridge;
 
 - (dispatch_queue_t)methodQueue
 {
@@ -43,15 +49,27 @@ RCT_EXPORT_METHOD(stop) {
 }
 - (void)server:(PSWebSocketServer *)server webSocket:(PSWebSocket *)webSocket didReceiveMessage:(id)message {
     RCTLogInfo(@"Server websocket did receive message: %@", message);
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
+        body:@{@"url": @"localhost:19281", @"event": @"message", @"requestId": @"adbcddfs12123424234234", @"data": message}];
 }
 - (void)server:(PSWebSocketServer *)server webSocketDidOpen:(PSWebSocket *)webSocket {
     RCTLogInfo(@"Server websocket did open");
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
+        body:@{@"url": @"localhost:19281", @"event": @"open", @"requestId": @"adbcddfs12123424234234", @"data": @"onOpen"}];
 }
 - (void)server:(PSWebSocketServer *)server webSocket:(PSWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
     RCTLogInfo(@"Server websocket did close with code: %@, reason: %@, wasClean: %@", @(code), reason, @(wasClean));
+    
+    [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
+        body:@{@"url": @"localhost:19281", @"event": @"close", @"requestId": @"adbcddfs12123424234234", @"data": @"onClose"}];
 }
 - (void)server:(PSWebSocketServer *)server webSocket:(PSWebSocket *)webSocket didFailWithError:(NSError *)error {
     RCTLogInfo(@"Server websocket did fail with error: %@", error);
+    
+    [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
+        body:@{@"url": @"localhost:19281", @"event": @"error", @"requestId": @"adbcddfs12123424234234", @"data": @"onError"}];
 }
 
 @end

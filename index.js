@@ -62,6 +62,7 @@ export default class WebsocketServer {
   handleEvent = (evt) => {
 
     const reqEvent = evt;
+    console.log("WebsocketServer::handleEvent<reqEvent> - ", reqEvent);
     switch(reqEvent.event) {
       case "message": {
         const reqData = reqEvent.data;
@@ -93,7 +94,8 @@ export default class WebsocketServer {
       }
       break;
       default: {
-        throw new Error("WebsocketServer::handleEvent - " + reqEvent);
+        // throw new Error("WebsocketServer::handleEvent - " + reqEvent);
+        console.log("WebsocketServer::handleEvent - " + reqEvent);
       }
       break
     }
