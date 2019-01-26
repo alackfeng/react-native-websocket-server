@@ -6,11 +6,11 @@ import Base64 from "./Base64";
 
 const { height, width } =  Dimensions.get('window');
 const dappUrl1 = "http://192.168.0.238:8080/#/";
-const dappUrl2 = "https://betdice.one/?ref=welovecasino";
+const dappUrl2 = "https://betdice.one/?ref=scatterrefer";
 const dappUrl3 = "https://newdex.340wan.com/?channel=meetone";
 const dappUrl4 = "https://meet.one/test/index.html";
 const dappUrl = "https://eosbet.io/?ref=scatterrefer";
-const dappUrl6 = "http://192.168.0.238:18080/";
+const dappUrl9 = "http://192.168.0.238:18080/";
 const dappUrl7 = "https://game.wizards.one/#/wizards";
 
 export default class DappWebView extends Component {
@@ -36,7 +36,7 @@ export default class DappWebView extends Component {
   }
 
   handleWebViewMessage = (e) => {
-    // console.log("handleWebViewMessage: ", e.nativeEvent.url, e.nativeEvent.data);
+    console.log("handleWebViewMessage: ", e.nativeEvent.url, e.nativeEvent.data);
     const url = e.nativeEvent.data;
 
     if(!url) {
@@ -93,6 +93,8 @@ export default class DappWebView extends Component {
       <WebView
         ref={webview => { this.webview = webview; }}
         source={{ uri: dappUrl }}
+        originWhitelist={"*"}
+        onShouldStartLoadWithRequest={(e)=>{console.log('onShouldStartLoadWithRequest', e); return true;}}
         style={{ marginTop: 20, width, height }}
         onLoad={(e) => console.log('onLoad')}
         onLoadEnd={(e) => console.log('onLoadEnd')}

@@ -56,6 +56,12 @@ typedef NS_ENUM(NSInteger, PSWebSocketReadyState) {
  */
 + (BOOL)isWebSocketRequest:(NSURLRequest *)request;
 
+
+/**
+ * export get remoteUrl
+ */
+- (NSString* )remoteUrl;
+
 #pragma mark - Properties
 
 

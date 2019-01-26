@@ -53,6 +53,10 @@
     return [PSWebSocketDriver isWebSocketRequest:request];
 }
 
+- (NSString* )remoteUrl {
+    return [NSString stringWithFormat: @"%@:%@%@?%@", _request.URL.host, _request.URL.port, _request.URL.path, _request.URL.query];
+}
+
 #pragma mark - Properties
 
 - (PSWebSocketReadyState)readyState {

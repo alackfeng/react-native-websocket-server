@@ -103,7 +103,7 @@ export default class WebsocketServer {
 
   start () {
     RNWebsocketServer.start(this.ipAddress, this.port);
-    DeviceEventEmitter.addListener('RNWebsocketServerResponeReceived', this.callback); // this.callback);
+    DeviceEventEmitter.addListener('RNWebsocketServerResponeReceived', this.handleEvent); // this.callback);
   }
 
   stop () {
