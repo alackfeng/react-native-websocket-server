@@ -53,5 +53,6 @@
 
 - (void)start;
 - (void)stop;
+- (void)send:(NSString*)requestId body:(NSString*)body;
 
 @end

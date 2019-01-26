@@ -36,6 +36,12 @@ RCT_EXPORT_METHOD(stop) {
     [self.server stop];
 }
 
+RCT_EXPORT_METHOD(send:(NSString *)requestId body:(NSString *)body ) {
+    RCTLogInfo(@"Send Websocket Message <%@> - %@", requestId, body);
+
+    [self.server send:requestId body:body];
+}
+
 #pragma mark - PSWebSocketServerDelegate
 
 - (void)serverDidStart:(PSWebSocketServer *)server {

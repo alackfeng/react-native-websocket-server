@@ -149,6 +149,12 @@ void PSWebSocketServerAcceptCallback(CFSocketRef s, CFSocketCallBackType type, C
     }];
 }
 
+- (void)send:(NSString*)requestId body:(NSString*)body {
+    [self executeWork:^{
+        [self sendResponse:body];
+    }];   
+}
+
 #pragma mark - Connection
 
 - (void)connect:(BOOL)silent {
@@ -215,6 +221,17 @@ void PSWebSocketServerAcceptCallback(CFSocketRef s, CFSocketCallBackType type, C
     
     _running = NO;
 }
+
+- (void)sendResponse:(NSString*)body {
+    if(!_running) {
+        return;
+    }
+    
+    for(PSWebSocket *webSocket in _webSockets.allObjects) {
+        [webSocket send:body];
+    }
+}
+
 - (void)disconnect:(BOOL)silent {
     if(_socketRunLoopSource) {
         CFRunLoopRef runLoop = [[self runLoop] getCFRunLoop];
