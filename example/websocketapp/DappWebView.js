@@ -9,8 +9,8 @@ const dappUrl1 = "http://192.168.0.238:8080/#/";
 const dappUrl2 = "https://betdice.one/?ref=scatterrefer";
 const dappUrl3 = "https://newdex.340wan.com/?channel=meetone";
 const dappUrl4 = "https://meet.one/test/index.html";
-const dappUrl = "https://eosbet.io/?ref=scatterrefer";
-const dappUrl9 = "http://192.168.0.238:18080/";
+const dappUrl8 = "https://eosbet.io/?ref=scatterrefer";
+const dappUrl = "http://192.168.0.238:18080/";
 const dappUrl7 = "https://game.wizards.one/#/wizards";
 
 export default class DappWebView extends Component {
@@ -89,7 +89,7 @@ export default class DappWebView extends Component {
 
     return (
     <View style={{backgroundColor: 'transparent', flex: 1}}>
-      <Text>DappWebView load progress: {this.state.progress*100}%</Text>
+      <Text>{dappUrl}: {this.state.progress*100}%</Text>
       <WebView
         ref={webview => { this.webview = webview; }}
         source={{ uri: dappUrl }}

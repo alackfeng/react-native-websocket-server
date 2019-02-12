@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 
-import RNWebsocketServer from 'react-native-websocket-server';
+import RNWebsocketServer, {ScatterServer} from 'react-native-websocket-server';
 
 
 class DappWebsocket extends Component {
@@ -17,26 +17,57 @@ class DappWebsocket extends Component {
       url: "ws://127.0.0.1:50005/",
       // url: "ws://192.168.0.238:50005/",
       RNServer: null,
+      typeJson: 1,
     }
   }
 
   componentDidMount() {
-    const RNServer = new RNWebsocketServer('127.0.0.1', 50005, (evt) => {
-      // console.log("RNServer::recv - ", typeof(evt), evt.event);
-      console.log("RNServer::recv - ", evt);
-      RNServer.send('requestid', evt.data)
-    });
-    RNServer.start();
-    console.log("RNServer::start - ");
-    this.setState({RNServer})
+
+   
+    // this.startWS(); 
   }
 
   sendMessage = () => {
     // this.state.ws.send('message-' + (Math.random()*255).toFixed(0))
-    const typeJson = 1;
+    const typeJson = this.state.typeJson;
     const message = 'message-' + (Math.random()*255).toFixed(0);
-    const json = {url: "a", data: ["ddd", "daa"]};
+    const json = {url: this.state.url, data: ["test", message]};
     this.state.ws.send(typeJson ? JSON.stringify(json) : message);
+  }
+
+
+  matchUrl = () => {
+    const match = /^(ws?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
+    const urlMatch = match.exec(this.state.url);
+    const ipserver = urlMatch[2] || '127.0.0.1';
+    const ipport = +(urlMatch[3].substring(1)) || 50005;
+    
+    return {ipserver, ipport};
+  }
+
+  startScatterServerWS = () => {
+    
+    const {ipserver, ipport} = this.matchUrl();
+    const RNServer = new ScatterServer(ipserver, ipport, (evt) => {
+      console.log("DappWebsocket::startScatterServerWS::recv - ", evt);
+      // RNServer.send('requestid', evt.data)
+    });
+    RNServer.start();
+    console.log("RNServer::start - ", ipserver, ipport);
+    this.setState({RNServer, show: 'Scatter Server started'})
+
+  }
+
+  startServerWS = () => {
+
+    const {ipserver, ipport} = this.matchUrl();
+    const RNServer = new RNWebsocketServer(ipserver, ipport, (evt) => {
+      // console.log("RNServer::recv - ", evt);
+      RNServer.send('requestid', evt.data)
+    });
+    RNServer.start();
+    console.log("RNServer::start - ", ipserver, ipport);
+    this.setState({RNServer, show: 'Server started'})
   }
 
   createWS = () => {
@@ -45,17 +76,17 @@ class DappWebsocket extends Component {
     _This = this;
     ws.onopen = function(evt) {
       console.log("DappWebsocket::onopen - Connection open ...");
-      ws.send("Hello WebSockets!");
+      // ws.send("Hello WebSockets!");
     };
      
     ws.onmessage = function(evt) {
-      console.log("DappWebsocket::onmessage - Received Message: " + evt.data);
-      // ws.close();
+      // console.log("DappWebsocket::onmessage - Received Message: " + evt.data);
       _This.setState({show: evt.data});
     };
      
     ws.onclose = function(evt) {
       console.log("DappWebsocket::onclose - Connection closed.");
+      _This.setState({show: evt.data});
     }
     this.setState({ws});
   }
@@ -68,15 +99,21 @@ class DappWebsocket extends Component {
 
     return (
       <View>
-        <Text>DappWebsocket: {this.state.show}</Text>
-        <TextInput 
+      <TextInput 
           style={{height: 40, borderColor: 'gray', borderBottomWidth: 1, width: 300}}
           value={this.state.url} 
           onChangeText={(v) => this.setState({url: v})} 
         />
-        <Button title={'Create'} onPress={this.createWS} />
-        <Button title={'Send'} onPress={this.sendMessage} />
-        <Button title={'Close'} onPress={this.closeWS} />
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <Button title={'Scatter'} onPress={this.startScatterServerWS} />
+          <Button title={'Server'} onPress={this.startServerWS} />
+          <Button title={'Create'} onPress={this.createWS} />
+          <Button title={'Send'} onPress={this.sendMessage} />
+          <Button title={'Close'} onPress={this.closeWS} />
+        </View>
+        <Text style={{color: 'red'}}>Tips: {this.state.show}</Text>
+        
+        
       </View>
     );
   }

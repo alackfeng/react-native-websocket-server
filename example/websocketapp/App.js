@@ -24,8 +24,8 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>RN Websocket Server APP</Text>
-        <DappWebView />
         <DappWebsocket />
+        <DappWebView />
       </View>
     );
   }
@@ -34,9 +34,10 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    marginTop: 50,
   },
   welcome: {
     fontSize: 20,
