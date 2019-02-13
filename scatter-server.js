@@ -3,7 +3,16 @@ import { NativeModules, DeviceEventEmitter } from 'react-native';
 
 const { RNWebsocketServer } = NativeModules;
 
+import { connectConnected, connectRekey, connectPaired, 
+  identityFromPermissions, getOrRequestIdentity, getVersion, 
+  forgetIdentity, requestAddNetwork, getPublicKey, linkAccount,
+  requestArbitrarySignature, requestTransfer 
+} from "./scatter-protocol";
+
 const callback_default = () => { alert('are you sure not contain callback ?') }
+
+
+const pluginList = ["scatter-demo", "eosbet.io"];
 
 
 export default class ScatterServer {  
@@ -13,30 +22,27 @@ export default class ScatterServer {
     this.callback   = callback;
   }
 
-  callbackToUI = (request) => {
+  callbackToUI = (request, responseCB) => {
     if(this.callback)
-      this.callback(request);
+      this.callback(request, responseCB);
   }
 
-  // { data: '42/scatter,["pair",{"data":{"appkey":"appkey:701432262492372292171599916622155200161195209215328220154109188167","origin":"eosbet.io","passthrough":true},"plugin":"eosbet.io"}]
   handlePair = (request) => {
-    console.log('ScatterServer::handlePair - ', request);
-    // this.callbackToUI(request);
+    // console.log('ScatterServer::handlePair - ', request);
 
     const plugin = request.plugin;
     const payload = request.data;
     const requestId = request.requestId;
 
-    // socket.send('42/scatter,' + JSON.stringify(['rekeyed', json]);
     if(payload.passthrough) {
-      this.send(request.requestId, '42/scatter,' + JSON.stringify(['paired', true]));
+      this.send(request.requestId, connectRekey());
     } else {
-      this.send(request.requestId, '42/scatter,' + JSON.stringify(['paired', true]));
+      this.send(request.requestId, connectPaired(true));
     }
 
   }
 
-  // {"data":{"type":"identityFromPermissions","payload":{"origin":"eosbet.io"},"id":"15225517621722621011621542431011901791481481481721451666124216249248","appkey":"31d6a851a08e59ae8d7d565223475f9540a5b363d1747da680be6642cbd231ec","nonce":0,"nextNonce":"ad883a240ba576a20195c9b672b52544eecf12d7a814d90e3d6bf27707f29da5"},"plugin":"eosbet.io"}
+
   handleApi = (request) => {
 
     const plugin = request.plugin;
@@ -44,21 +50,42 @@ export default class ScatterServer {
     const requestId = request.requestId;
     console.log('ScatterServer::handleApi - ', payload.type, request);
 
-    if(payload.type === 'identityFromPermissions') {
-      const responseJson = {id: payload.id, result: null};
-      this.send(request.requestId, '42/scatter,' + JSON.stringify(['api', responseJson]));
-    } else if(payload.type === 'getOrRequestIdentity') {
-      const responseJson = {id: payload.id, result: null};
-      this.send(request.requestId, '42/scatter,' + JSON.stringify(['api', responseJson]));
+    switch (payload.type) {
+      case "identityFromPermissions":
+      case "getOrRequestIdentity":
+        this.send(request.requestId, identityFromPermissions(payload.id)); break;
+      case "forgetIdentity":
+        this.send(request.requestId, forgetIdentity(payload.id)); break;
+      case "getVersion": 
+        this.send(request.requestId, getVersion(payload.id)); break;
+      case "requestAddNetwork": {
+        // handle add network
+        this.send(request.requestId, requestAddNetwork(payload.id, true)); 
+      } break;
+      case "getPublicKey": 
+        this.send(request.requestId, getPublicKey(payload.id, "EOS5zwpo5uNUGsjbGHDM7vGJstgo357WDhn5cL1CxXtDWpLHEetce")); break;
+      case "linkAccount": 
+        this.send(request.requestId, linkAccount(payload.id)); break;
+      case "requestArbitrarySignature": {
+        
+        this.callbackToUI(request, (id, sign) => {
+          this.send(id, requestArbitrarySignature(payload.id, 
+            sign)); 
+        });
+      } break;
+      case "requestTransfer":
+        this.send(request.requestId, requestTransfer(payload.id, "requestTransfer")); break;
 
-    } else {
-      console.log('ScatterServer::handleApi - ', 'not implement!!!');
+      default: 
+        console.log('ScatterServer::handleApi - <' + payload.type + '> not implement!!!'); 
+      break;
     }
     
   }
 
   handleRekeyed = (request) => {
-    console.log('ScatterServer::handleRekeyed - ', request);
+    // console.log('ScatterServer::handleRekeyed - ', request);
+    this.send(request.requestId, connectPaired(true));
   }
 
   handleDisconnect = (request) => {
@@ -68,26 +95,25 @@ export default class ScatterServer {
   handleEvent = (evt) => {
 
     const reqEvent = evt;
-    console.log("ScatterServer::handleEvent<reqEvent> - ", reqEvent);
+    // console.log("ScatterServer::handleEvent<reqEvent> - ", reqEvent);
     switch(reqEvent.event) {
       case "message": {
+        
         const reqData = reqEvent.data;
         if(-1 === reqData.indexOf('40/scatter') && -1 === reqData.indexOf('42/scatter') ) {
           throw new Error("ScatterServer::handleEvent<message> - " + reqEvent);
         }
 
-        if(0 === reqData.indexOf('40/scatter')) { // 40
-          // /127.0.0.1:57380/socket.io/?EIO=3&transport=websocket
-          console.log("ScatterServer::handleEvent<message> - ", reqEvent.url + " CONNECT refers");
-
-          this.send(reqEvent.requestId, '42/scatter,' + JSON.stringify(['connected'])); // notify it of a successful connection
+        if(0 === reqData.indexOf('40/scatter')) { // 40/scatter
+          this.send(reqEvent.requestId, connectConnected()); // notify it of a successful connection
           return;
-        } 
+        }
 
         // 42/scatter Handshaking/Upgrading Real message
         const [type, data] = JSON.parse(reqData.replace('42/scatter,', ''));
-        console.log("ScatterServer::handleEvent<message> - ", reqEvent.url + " EVENT " + type);
+        // console.log("ScatterServer::handleEvent<message> - ", /*reqEvent.url + */" EVENT " + type);
 
+        // dispatch Message to function
         const handFunc = type.charAt(0).toUpperCase() + type.slice(1);
         const request = Object.assign(data, {requestId: reqEvent.requestId});
         this[`handle${handFunc}`](request);
@@ -96,12 +122,12 @@ export default class ScatterServer {
       case "open":
       case "close":
       case "create": {
-        console.log("ScatterServer::handleEvent<open|close|create> - ", reqEvent.event, reqEvent.url);
+        console.log("ScatterServer::handleEvent<" + reqEvent.event + "> - " + reqEvent.url);
       }
       break;
       default: {
         // throw new Error("ScatterServer::handleEvent - " + reqEvent);
-        console.log("ScatterServer::handleEvent - " + reqEvent);
+        console.log("ScatterServer::handleEvent - unkown: " + reqEvent);
       }
       break
     }

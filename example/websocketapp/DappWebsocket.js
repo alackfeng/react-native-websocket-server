@@ -48,9 +48,10 @@ class DappWebsocket extends Component {
   startScatterServerWS = () => {
     
     const {ipserver, ipport} = this.matchUrl();
-    const RNServer = new ScatterServer(ipserver, ipport, (evt) => {
+    const RNServer = new ScatterServer(ipserver, ipport, (evt, cb) => {
       console.log("DappWebsocket::startScatterServerWS::recv - ", evt);
       // RNServer.send('requestid', evt.data)
+      cb(evt.id, 'SIG_K1_KUtE54b88SQppgSGvyQM44ejjXyY6HjJM7i1uEDGFJU4WyJTCEht4bMW79Nw9jiEpXyeMnqruWnWcp2bnuEwCoDzkTv4Dg');
     });
     RNServer.start();
     console.log("RNServer::start - ", ipserver, ipport);
