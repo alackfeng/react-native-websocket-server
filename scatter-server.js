@@ -3,7 +3,7 @@ import { NativeModules, DeviceEventEmitter } from 'react-native';
 
 const { RNWebsocketServer } = NativeModules;
 
-import { connectConnected, connectRekey, connectPaired, 
+import { responseResult, connectConnected, connectRekey, connectPaired, 
   identityFromPermissions, getOrRequestIdentity, getVersion, 
   forgetIdentity, requestAddNetwork, getPublicKey, linkAccount,
   requestArbitrarySignature, requestTransfer 
@@ -30,62 +30,127 @@ export default class ScatterServer {
   handlePair = (request) => {
     // console.log('ScatterServer::handlePair - ', request);
 
-    const plugin = request.plugin;
-    const payload = request.data;
-    const requestId = request.requestId;
+    // const plugin = request.plugin;
+    // const payload = request.data;
+    // const requestId = request.requestId;
 
-    if(payload.passthrough) {
-      this.send(request.requestId, connectRekey());
-    } else {
-      this.send(request.requestId, connectPaired(true));
-    }
+    // if(payload.passthrough) {
+    //   this.send(request.requestId, connectRekey());
+    // } else {
+    //   this.send(request.requestId, connectPaired(true));
+    // }
 
+    this.callbackToUI(request, (id, result) => {
+      if(request.requestId === id) {
+
+        console.log("handlePair::send - rekey: ", result["paired"]);
+        if(result.hasOwnProperty("rekey")) {
+          console.log("handlePair::send - rekey: ", result);
+          this.send(request.requestId, connectRekey());
+        }
+        else if(result.hasOwnProperty("paired")) {
+          console.log("handlePair::send - paired: ", result);
+          this.send(request.requestId, connectPaired(result.paired));
+        }
+      }
+    });
   }
 
 
+  // All authenticated api requests pass through the 'api' route.
   handleApi = (request) => {
 
-    const plugin = request.plugin;
-    const payload = request.data;
-    const requestId = request.requestId;
-    console.log('ScatterServer::handleApi - ', payload.type, request);
+    if(!request.plugin || request.plugin.length > 35)
+      return this.send(request.requestId, responseResult(payload.id, null));
 
-    switch (payload.type) {
-      case "identityFromPermissions":
-      case "getOrRequestIdentity":
-        this.send(request.requestId, identityFromPermissions(payload.id)); break;
-      case "forgetIdentity":
-        this.send(request.requestId, forgetIdentity(payload.id)); break;
-      case "getVersion": 
-        this.send(request.requestId, getVersion(payload.id)); break;
-      case "requestAddNetwork": {
-        // handle add network
-        this.send(request.requestId, requestAddNetwork(payload.id, true)); 
-      } break;
-      case "getPublicKey": 
-        this.send(request.requestId, getPublicKey(payload.id, "EOS5zwpo5uNUGsjbGHDM7vGJstgo357WDhn5cL1CxXtDWpLHEetce")); break;
-      case "linkAccount": 
-        this.send(request.requestId, linkAccount(payload.id)); break;
-      case "requestArbitrarySignature": {
+    request.plugin = request.plugin.replace(/\s/g, "");
+
+    // 2 way authentication
+
+    this.callbackToUI(request, (id, result) => {
+      if(request.requestId === id) {
+        console.log("handlePair::send - api: ", result);
+        switch (result.type) {
+          case "identityFromPermissions":
+          case "getOrRequestIdentity":
+            this.send(request.requestId, identityFromPermissions(result.id, result.result)); break;
+          case "forgetIdentity":
+            this.send(request.requestId, forgetIdentity(result.id)); break;
+          case "getVersion": 
+            this.send(request.requestId, getVersion(result.id)); break;
+          case "requestAddNetwork": {
+            // handle add network
+            this.send(request.requestId, requestAddNetwork(result.id, true)); 
+          } break;
+          case "getPublicKey": 
+            this.send(request.requestId, getPublicKey(result.id, result.result)); break;
+          case "linkAccount": 
+            this.send(request.requestId, linkAccount(result.id)); break;
+          case "requestArbitrarySignature": {
+            this.send(id, requestArbitrarySignature(result.id, result.result)); 
+          } break;
+          case "requestTransfer":
+            this.send(request.requestId, requestTransfer(result.id, result.result)); break;
+
+          default: 
+            console.log('ScatterServer::handleApi - <' + result.type + '> not implement!!!'); 
+          break;
+        }       
+      }
+    });
+
+    
+
+
+    // const payload = request.data;
+    // const requestId = request.requestId;
+    // console.log('ScatterServer::handleApi - ', payload.type, request);
+
+    // switch (payload.type) {
+    //   case "identityFromPermissions":
+    //   case "getOrRequestIdentity":
+    //     this.send(request.requestId, identityFromPermissions(payload.id)); break;
+    //   case "forgetIdentity":
+    //     this.send(request.requestId, forgetIdentity(payload.id)); break;
+    //   case "getVersion": 
+    //     this.send(request.requestId, getVersion(payload.id)); break;
+    //   case "requestAddNetwork": {
+    //     // handle add network
+    //     this.send(request.requestId, requestAddNetwork(payload.id, true)); 
+    //   } break;
+    //   case "getPublicKey": 
+    //     this.send(request.requestId, getPublicKey(payload.id, "EOS5zwpo5uNUGsjbGHDM7vGJstgo357WDhn5cL1CxXtDWpLHEetce")); break;
+    //   case "linkAccount": 
+    //     this.send(request.requestId, linkAccount(payload.id)); break;
+    //   case "requestArbitrarySignature": {
         
-        this.callbackToUI(request, (id, sign) => {
-          this.send(id, requestArbitrarySignature(payload.id, 
-            sign)); 
-        });
-      } break;
-      case "requestTransfer":
-        this.send(request.requestId, requestTransfer(payload.id, "requestTransfer")); break;
+    //     this.callbackToUI(request, (id, sign) => {
+    //       this.send(id, requestArbitrarySignature(payload.id, 
+    //         sign)); 
+    //     });
+    //   } break;
+    //   case "requestTransfer":
+    //     this.send(request.requestId, requestTransfer(payload.id, "requestTransfer")); break;
 
-      default: 
-        console.log('ScatterServer::handleApi - <' + payload.type + '> not implement!!!'); 
-      break;
-    }
+    //   default: 
+    //     console.log('ScatterServer::handleApi - <' + payload.type + '> not implement!!!'); 
+    //   break;
+    // }
     
   }
 
   handleRekeyed = (request) => {
     // console.log('ScatterServer::handleRekeyed - ', request);
-    this.send(request.requestId, connectPaired(true));
+    // this.send(request.requestId, connectPaired(true));
+
+    this.callbackToUI(request, (id, result) => {
+      if(request.requestId === id) {
+        console.log("handlePair::send - rekeyed: ", result);
+        if(result.hasOwnProperty("paired"))
+          this.send(request.requestId, connectPaired(result.paired));          
+      }
+    });
+
   }
 
   handleDisconnect = (request) => {
@@ -94,8 +159,9 @@ export default class ScatterServer {
 
   handleEvent = (evt) => {
 
-    const reqEvent = evt;
+    const reqEvent = evt;    
     // console.log("ScatterServer::handleEvent<reqEvent> - ", reqEvent);
+
     switch(reqEvent.event) {
       case "message": {
         
@@ -115,7 +181,7 @@ export default class ScatterServer {
 
         // dispatch Message to function
         const handFunc = type.charAt(0).toUpperCase() + type.slice(1);
-        const request = Object.assign(data, {requestId: reqEvent.requestId});
+        const request = Object.assign(data, {requestId: reqEvent.requestId, requestType: type});
         this[`handle${handFunc}`](request);
 
       } break;

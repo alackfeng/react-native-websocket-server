@@ -5,7 +5,7 @@
  * request: 
  * response: 42/scatter,["api",{"id":"129828211333125165148183204994522381088021410210525020013023344","result": true}]
  */
-const responseResult = (id, result) => ('42/scatter,' + JSON.stringify(["api",{"id": id, "result": result}]));
+export const responseResult = (id, result) => ('42/scatter,' + JSON.stringify(["api",{"id": id, "result": result}]));
 
 
 /** 
@@ -57,14 +57,14 @@ reponse:
 const idDefault = "1";
 const publicKeyDefault = "EOS8S3tdsSeTyCe2NBgkKcHgv9KYw2xVwLFDGxH1ebVhLwMnGkDxY";
 
-export const getOrRequestIdentity = (id, publicKey, accounts) => identityFromPermissions(id, publicKey, accounts);
-export const identityFromPermissions = (id, publicKey, accounts) => {
+export const getOrRequestIdentity = (id, result) => identityFromPermissions(id, result);
+export const identityFromPermissions = (id, result) => {
   
   return '42/scatter,' + JSON.stringify([
     "api",
     {
       "id": id || idDefault,
-      "result": {
+      "result": result || {
         "hash": "2f6c45d4f67354c8a4896f04b0651ceafa08b2c86658b54a0fc095f9662691f1",
         "publicKey": publicKey || publicKeyDefault,
         "name": "MyFirstIdentity",
