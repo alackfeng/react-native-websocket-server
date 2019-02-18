@@ -44,6 +44,10 @@ RCT_EXPORT_METHOD(send:(NSString *)requestId body:(NSString *)body ) {
 
 #pragma mark - PSWebSocketServerDelegate
 
+- (NSString*) requestId {
+    return [NSString stringWithFormat:@"%lf:%u", [[NSDate date] timeIntervalSince1970], arc4random_uniform(1000000)];
+}
+
 - (void)serverDidStart:(PSWebSocketServer *)server {
     RCTLogInfo(@"Server did start…");
 }
@@ -58,25 +62,25 @@ RCT_EXPORT_METHOD(send:(NSString *)requestId body:(NSString *)body ) {
     RCTLogInfo(@"Server websocket did receive message: %@", message);
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
-        body:@{@"url": [webSocket remoteUrl], @"event": @"message", @"requestId": @"adbcddfs12123424234234", @"data": message}];
+        body:@{@"url": [webSocket remoteUrl], @"event": @"message", @"requestId": [self requestId], @"data": message}];
 }
 - (void)server:(PSWebSocketServer *)server webSocketDidOpen:(PSWebSocket *)webSocket {
     RCTLogInfo(@"Server websocket did open %@", [webSocket remoteUrl]);
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
-        body:@{@"url": [webSocket remoteUrl], @"event": @"open", @"requestId": @"adbcddfs12123424234234", @"data": @"onOpen"}];
+        body:@{@"url": [webSocket remoteUrl], @"event": @"open", @"requestId": [self requestId], @"data": @"onOpen"}];
 }
 - (void)server:(PSWebSocketServer *)server webSocket:(PSWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
     RCTLogInfo(@"Server websocket did close with code: %@, reason: %@, wasClean: %@", @(code), reason, @(wasClean));
     
     [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
-        body:@{@"url": [webSocket remoteUrl], @"event": @"close", @"requestId": @"adbcddfs12123424234234", @"data": @"onClose"}];
+        body:@{@"url": [webSocket remoteUrl], @"event": @"close", @"requestId": [self requestId], @"data": @"onClose"}];
 }
 - (void)server:(PSWebSocketServer *)server webSocket:(PSWebSocket *)webSocket didFailWithError:(NSError *)error {
     RCTLogInfo(@"Server websocket did fail with error: %@", error);
     
     [self.bridge.eventDispatcher sendAppEventWithName:@"RNWebsocketServerResponeReceived" 
-        body:@{@"url": [webSocket remoteUrl], @"event": @"error", @"requestId": @"adbcddfs12123424234234", @"data": @"onError"}];
+        body:@{@"url": [webSocket remoteUrl], @"event": @"error", @"requestId": [self requestId], @"data": @"onError"}];
 }
 
 @end
