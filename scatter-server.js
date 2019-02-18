@@ -3,10 +3,11 @@ import { NativeModules, DeviceEventEmitter } from 'react-native';
 
 const { RNWebsocketServer } = NativeModules;
 
-import { responseResult, connectConnected, connectRekey, connectPaired, 
+import { scatterVersion, 
+  responseResult, connectConnected, connectRekey, connectPaired, 
   identityFromPermissions, getOrRequestIdentity, getVersion, 
   forgetIdentity, requestAddNetwork, getPublicKey, linkAccount,
-  requestArbitrarySignature, requestTransfer 
+  requestArbitrarySignature, requestTransfer, requestSignature
 } from "./scatter-protocol";
 
 const callback_default = () => { alert('are you sure not contain callback ?') }
@@ -68,6 +69,7 @@ export default class ScatterServer {
     // 2 way authentication
 
     this.callbackToUI(request, (id, result) => {
+      // console.log("handlePair::send - api: ", id, request, result);
       if(request.requestId === id) {
         console.log("handlePair::send - api: ", result);
         switch (result.type) {
@@ -91,7 +93,8 @@ export default class ScatterServer {
           } break;
           case "requestTransfer":
             this.send(request.requestId, requestTransfer(result.id, result.result)); break;
-
+          case "requestSignature":
+            this.send(request.requestId, requestSignature(result.id, result.result)); break;
           default: 
             console.log('ScatterServer::handleApi - <' + result.type + '> not implement!!!'); 
           break;
@@ -197,6 +200,10 @@ export default class ScatterServer {
       }
       break
     }
+  }
+
+  version() {
+    return scatterVersion;
   }
 
   start () {

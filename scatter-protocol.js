@@ -24,7 +24,7 @@ export const connectPaired = (paired) => ('42/scatter,' + JSON.stringify(['paire
  * request: getVersion
  * response: 42/scatter,["api",{"id":"129828211333125165148183204994522381088021410210525020013023344","result":"10.1.2"}]
  */
-const scatterVersion = "10.1.0";
+export const scatterVersion = "10.1.0";
 export const getVersion = (id) => responseResult(id, scatterVersion);
 
 /*
@@ -129,6 +129,12 @@ export const requestArbitrarySignature = (id, signed) => responseResult(id, sign
 */
 export const requestTransfer = (id, result) => responseResult(id, result);
 
+/**
+ * request: requestSignature
+ * response: 
+42/scatter,["api",{"id":"197219128145249224175184942056966173391481461156861146253212195158","result":{"broadcast":true,"transaction":{"compression":"none","transaction":{"expiration":"2019-02-11T07:13:40","ref_block_num":37666,"ref_block_prefix":3487995166,"max_net_usage_words":0,"max_cpu_usage_ms":0,"delay_sec":0,"context_free_actions":[],"actions":[{"account":"eosio.token","name":"transfer","authorization":[{"actor":"coinfid55555","permission":"active"}],"data":"504a2925b9351d453044a0b96a9c4de3010000000000000004454f530000000000"}],"transaction_extensions":[]},"signatures":["SIG_K1_KA4BnexkQXaAfkHYGYppt7kRhsaeS4JjFTxnFxZhTXXbmu2WWebS8P9uhL7SZUVsXyDE6tUZB2En4JSXJjPzLQVzH4QZiV"]},"transaction_id":"1537c72aa97780003420630169fa305bca1785f6440cd99b35c9c86a9ead7113","processed":{"id":"1537c72aa97780003420630169fa305bca1785f6440cd99b35c9c86a9ead7113","block_num":42177656,"block_time":"2019-02-11T07:12:44.500","producer_block_id":null,"receipt":{"status":"executed","cpu_usage_us":297,"net_usage_words":16},"elapsed":297,"net_usage":128,"scheduled":false,"action_traces":[{"receipt":{"receiver":"eosio.token","act_digest":"5fa181a78ea9974d779e77c9e29bcd6038b004325daf01c3eef32c1b3b2c50ad","global_sequence":"4947401029","recv_sequence":813803224,"auth_sequence":[["coinfid55555",130]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"coinfid55555","permission":"active"}],"data":{"from":"coinfid55555","to":"whatsupto123","quantity":"0.0001 EOS","memo":""},"hex_data":"504a2925b9351d453044a0b96a9c4de3010000000000000004454f530000000000"},"context_free":false,"elapsed":109,"console":"","trx_id":"1537c72aa97780003420630169fa305bca1785f6440cd99b35c9c86a9ead7113","block_num":42177656,"block_time":"2019-02-11T07:12:44.500","producer_block_id":null,"account_ram_deltas":[],"except":null,"inline_traces":[{"receipt":{"receiver":"coinfid55555","act_digest":"5fa181a78ea9974d779e77c9e29bcd6038b004325daf01c3eef32c1b3b2c50ad","global_sequence":"4947401030","recv_sequence":175,"auth_sequence":[["coinfid55555",131]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"coinfid55555","permission":"active"}],"data":{"from":"coinfid55555","to":"whatsupto123","quantity":"0.0001 EOS","memo":""},"hex_data":"504a2925b9351d453044a0b96a9c4de3010000000000000004454f530000000000"},"context_free":false,"elapsed":3,"console":"","trx_id":"1537c72aa97780003420630169fa305bca1785f6440cd99b35c9c86a9ead7113","block_num":42177656,"block_time":"2019-02-11T07:12:44.500","producer_block_id":null,"account_ram_deltas":[],"except":null,"inline_traces":[]},{"receipt":{"receiver":"whatsupto123","act_digest":"5fa181a78ea9974d779e77c9e29bcd6038b004325daf01c3eef32c1b3b2c50ad","global_sequence":"4947401031","recv_sequence":19,"auth_sequence":[["coinfid55555",132]],"code_sequence":2,"abi_sequence":2},"act":{"account":"eosio.token","name":"transfer","authorization":[{"actor":"coinfid55555","permission":"active"}],"data":{"from":"coinfid55555","to":"whatsupto123","quantity":"0.0001 EOS","memo":""},"hex_data":"504a2925b9351d453044a0b96a9c4de3010000000000000004454f530000000000"},"context_free":false,"elapsed":5,"console":"","trx_id":"1537c72aa97780003420630169fa305bca1785f6440cd99b35c9c86a9ead7113","block_num":42177656,"block_time":"2019-02-11T07:12:44.500","producer_block_id":null,"account_ram_deltas":[],"except":null,"inline_traces":[]}]}],"except":null}}}]
+*/
+export const requestSignature = (id, result) => responseResult(id, result);
 
 
 
