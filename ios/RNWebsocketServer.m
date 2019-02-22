@@ -26,9 +26,46 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(start:(NSString *)ipAddress port:(int)port) {
     RCTLogInfo(@"Create Websocket Server at %d", port);
-    self.server = [PSWebSocketServer serverWithHost:ipAddress port:port];
+    
+
+    NSString *thePath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"p12"];
+    RCTLogInfo(@"Create Websocket Server at %@", thePath);
+    NSData *PKCS12Data = [[NSData alloc] initWithContentsOfFile:thePath];
+//    CFDataRef inPKCS12Data = (CFDataRef)CFBridgingRetain(PKCS12Data);
+//
+//    SecCertificateRef cert = SecCertificateCreateWithData(NULL, inPKCS12Data);
+////    [PKCS12Data release];
+//
+//    // the "identity" certificate
+//    SecIdentityRef identityRef;
+////    SecIdentityCreateWithCertificate(NULL, cert, &identityRef);
+//    sec_identity_create_with_certificates(&identityRef, cert);
+//
+//    // the certificates array, containing the identity then the root certificate
+//    NSArray *certs = [[NSArray alloc] initWithObjects:(id)CFBridgingRelease(identityRef), (id)CFBridgingRelease(cert), nil];
+//
+    
+    CFArrayRef keyref = NULL;
+    OSStatus sanityChesk = SecPKCS12Import((__bridge CFDataRef)PKCS12Data,
+                                           (__bridge CFDictionaryRef)[NSDictionary
+                                                                      dictionaryWithObject:@"Scatterjs2019"
+                                                                      forKey:(__bridge id)kSecImportExportPassphrase],
+                                           &keyref);
+    
+    if (sanityChesk != noErr) {
+        RCTLogInfo(@"Error while importing pkcs12 [%d]", sanityChesk);
+        return;
+    }
+    
+    NSArray *certs = (__bridge_transfer NSArray *)keyref;
+    
+    self.server = [PSWebSocketServer serverWithHost:ipAddress port:port SSLCertificates:certs];
     self.server.delegate = self;
     [self.server start];
+    
+    RCTLogInfo(@"OK-");
+
+
 }
 
 RCT_EXPORT_METHOD(stop) {

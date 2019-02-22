@@ -60,6 +60,7 @@
 		4F79BD2021F85D85000EC4F2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4F79BD2221F85DA0000EC4F2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		4F79BD2421F85DAA000EC4F2 /* libSystem.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.tbd; path = usr/lib/libSystem.tbd; sourceTree = SDKROOT; };
+		4F9FB5C8221FE89A00972625 /* server.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.p12; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNWebsocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNWebsocketServer.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNWebsocketServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNWebsocketServer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +131,7 @@
 			children = (
 				4F46954721F97E12003AD29D /* PocketSocket */,
 				B3E7B5881CC2AC0600A0062D /* RNWebsocketServer.h */,
+				4F9FB5C8221FE89A00972625 /* server.p12 */,
 				B3E7B5891CC2AC0600A0062D /* RNWebsocketServer.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				4F79BD1B21F85D73000EC4F2 /* Frameworks */,
