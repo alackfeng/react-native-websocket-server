@@ -6,12 +6,13 @@ import Base64 from "./Base64";
 
 const { height, width } =  Dimensions.get('window');
 const dappUrl1 = "http://192.168.0.238:8080/#/";
-const dappUrl2 = "https://betdice.one/?ref=scatterrefer";
+const dappUrl10 = "https://betdice.one/?ref=scatterrefer";
 const dappUrl3 = "https://newdex.340wan.com/?channel=meetone";
 const dappUrl4 = "https://meet.one/test/index.html";
-const dappUrl8 = "https://eosbet.io/?ref=scatterrefer";
-const dappUrl = "http://192.168.1.103:18080/";
+const dappUrl2 = "https://eosbet.io/?ref=scatterrefer";
+const dappUrl = "http://192.168.1.4:18080/";
 const dappUrl7 = "https://game.wizards.one/#/wizards";
+const dappUrl8 = "https://betx.fun/?ref=scatterrefer"
 
 export default class DappWebView extends Component {
 

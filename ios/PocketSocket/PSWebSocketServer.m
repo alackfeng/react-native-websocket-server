@@ -270,23 +270,36 @@ void PSWebSocketServerAcceptCallback(CFSocketRef s, CFSocketCallBackType type, C
         }
         
         // configure streams
-        CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
-        CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
+        Boolean isRead1 =  CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
+        Boolean isWrite1 =  CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
         
         // enable SSL
         if(_secure) {
+            NSLog(@"ws::accept -. %d ", _secure);
             NSMutableDictionary *opts = [NSMutableDictionary dictionary];
             
             opts[(__bridge id)kCFStreamSSLIsServer] = @YES;
+//            opts[(__bridge id)kCFStreamSSLPeerName] = @"192.168.1.238";
+//            opts[(__bridge id)kCFStreamPropertySSLPeerTrust] = @YES;
+//            opts[(__bridge id)kCFStreamSSLAllowsAnyRoot] = @YES;
+
+//            opts[(__bridge id)kCFStreamSSLLevel] = (__bridge id)kCFStreamSocketSecurityLevelNegotiatedSSL;
             opts[(__bridge id)kCFStreamSSLCertificates] = _SSLCertificates;
             opts[(__bridge id)kCFStreamSSLValidatesCertificateChain] = @NO; // i.e. client certs
+            NSLog(@"ws::accept -. %@ ", opts);
             
-            CFReadStreamSetProperty(readStream, kCFStreamPropertySSLSettings, (__bridge CFDictionaryRef)opts);
-            CFWriteStreamSetProperty(writeStream, kCFStreamPropertySSLSettings, (__bridge CFDictionaryRef)opts);
+            Boolean isRead =  CFReadStreamSetProperty(readStream, kCFStreamPropertySSLSettings, (__bridge CFDictionaryRef)opts);
+            Boolean isWrite =  CFWriteStreamSetProperty(writeStream, kCFStreamPropertySSLSettings, (__bridge CFDictionaryRef)opts);
+//            CFReadStreamSetProperty(readStream, kCFStreamPropertySocketSecurityLevel, kCFStreamSocketSecurityLevelNegotiatedSSL);
 
+            NSLog(@"ws::accept -. %d 1, bool %d:%d-%d:%d", _secure, isRead1,isWrite1, isRead, isWrite);
+            
             SSLContextRef context = (SSLContextRef)CFWriteStreamCopyProperty(writeStream, kCFStreamPropertySSLContext);
-            SSLSetClientSideAuthenticate(context, kTryAuthenticate);
-            CFRelease(context);
+            // NSLog(@"ws::accept -. %d 1 1", _secure);
+            SSLSetClientSideAuthenticate(context, kNeverAuthenticate);
+            // NSLog(@"ws::accept -. %d 1 2", _secure);
+//            CFRelease(context);
+            NSLog(@"ws::accept -. over ");
         }
         
         // create connection

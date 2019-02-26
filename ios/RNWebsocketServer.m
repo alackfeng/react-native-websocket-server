@@ -26,40 +26,41 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(start:(NSString *)ipAddress port:(int)port) {
     RCTLogInfo(@"Create Websocket Server at %d", port);
-    
+   
 
-    NSString *thePath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"p12"];
+   NSString *thePath = [[NSBundle mainBundle] pathForResource:@"Scatterjs" ofType:@"p12"];
     RCTLogInfo(@"Create Websocket Server at %@", thePath);
     NSData *PKCS12Data = [[NSData alloc] initWithContentsOfFile:thePath];
-//    CFDataRef inPKCS12Data = (CFDataRef)CFBridgingRetain(PKCS12Data);
-//
-//    SecCertificateRef cert = SecCertificateCreateWithData(NULL, inPKCS12Data);
-////    [PKCS12Data release];
-//
-//    // the "identity" certificate
-//    SecIdentityRef identityRef;
-////    SecIdentityCreateWithCertificate(NULL, cert, &identityRef);
-//    sec_identity_create_with_certificates(&identityRef, cert);
-//
-//    // the certificates array, containing the identity then the root certificate
-//    NSArray *certs = [[NSArray alloc] initWithObjects:(id)CFBridgingRelease(identityRef), (id)CFBridgingRelease(cert), nil];
-//
-    
-    CFArrayRef keyref = NULL;
-    OSStatus sanityChesk = SecPKCS12Import((__bridge CFDataRef)PKCS12Data,
-                                           (__bridge CFDictionaryRef)[NSDictionary
-                                                                      dictionaryWithObject:@"Scatterjs2019"
-                                                                      forKey:(__bridge id)kSecImportExportPassphrase],
-                                           &keyref);
+    CFDataRef inPKCS12Data = (CFDataRef)CFBridgingRetain(PKCS12Data);
+    CFStringRef password = CFSTR("Scatterjs2019");
+    const void *keys[] = { kSecImportExportPassphrase };
+    const void *values[] = { password };
+    CFDictionaryRef optionsDictionary = CFDictionaryCreate(NULL, keys, values, 1, NULL, NULL);
+    CFArrayRef items = CFArrayCreate(NULL, 0, 0, NULL);
+    OSStatus sanityChesk = SecPKCS12Import(inPKCS12Data, optionsDictionary, &items);
     
     if (sanityChesk != noErr) {
         RCTLogInfo(@"Error while importing pkcs12 [%d]", sanityChesk);
         return;
     }
     
-    NSArray *certs = (__bridge_transfer NSArray *)keyref;
+    SecIdentityRef identityRef = NULL;
+    SecCertificateRef certificateRef = NULL;
+    SecTrustRef trustRef = NULL;
     
+    CFDictionaryRef myIdentityAndTrust = CFArrayGetValueAtIndex (items, 0);
+    const void *tempIdentity = NULL;
+    tempIdentity = CFDictionaryGetValue (myIdentityAndTrust, kSecImportItemIdentity);
+    identityRef = (SecIdentityRef)tempIdentity;
+    const void *tempTrust = NULL;
+    tempTrust = CFDictionaryGetValue (myIdentityAndTrust, kSecImportItemTrust);
+    trustRef = (SecTrustRef)tempTrust;
+    
+    SecIdentityCopyCertificate(identityRef, &certificateRef);
+    NSArray *certs = [[NSArray alloc] initWithObjects:(id)CFBridgingRelease(identityRef), (id)CFBridgingRelease(certificateRef), nil];
+        
     self.server = [PSWebSocketServer serverWithHost:ipAddress port:port SSLCertificates:certs];
+    // self.server = [PSWebSocketServer serverWithHost:ipAddress port:port];
     self.server.delegate = self;
     [self.server start];
     
